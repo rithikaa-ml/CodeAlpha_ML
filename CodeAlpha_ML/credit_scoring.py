@@ -2,7 +2,12 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder
 from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import accuracy_score, classification_report
+from sklearn.metrics import (
+    accuracy_score,
+    classification_report,
+    confusion_matrix,
+    roc_auc_score
+)
 
 # Load Dataset
 data = pd.read_csv("german.data", sep=" ", header=None)
@@ -34,13 +39,21 @@ model.fit(X_train, y_train)
 # Predict
 y_pred = model.predict(X_test)
 
-# Accuracy
+# Evaluation Metrics
 accuracy = accuracy_score(y_test, y_pred)
+roc_auc = roc_auc_score(y_test, y_pred)
+cm = confusion_matrix(y_test, y_pred)
 
 print("\n===== CREDIT SCORING MODEL =====")
 print("Model Accuracy:", accuracy)
 
 print("\nClassification Report:")
 print(classification_report(y_test, y_pred))
+
+print("\nROC-AUC Score:")
+print(roc_auc)
+
+print("\nConfusion Matrix:")
+print(cm)
 
 print("\nCredit Scoring Model Completed Successfully!")
